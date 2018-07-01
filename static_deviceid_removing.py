@@ -1,17 +1,25 @@
-'''author Zhengkai Zhang
-   this code is to get static node of one node.
-'''
+""" Data Analysis based on Graph
+    This code will generate grapg.out file to print out our desired graph
+    author: Zhengkai Zhang
+"""
 import sys
 import numpy as np
 import networkx as nx
-from networkx.drawing.nx_agraph import write_dot
-#import matplotlib.pyplot as plt
-import pylab as plt #import Matplotlib plotting interface >>>
+import pylab as plt
 from sets import Set
-from collections import deque
+from networkx.drawing.nx_agraph import write_dot
 
-# Read from 4 to 6 o'clock to get the static device name
 def get_static_device(file_name, time_from, time_to):
+    """
+        this module is to get static devices during mid night to remove
+        data noise to produce cleaner data.
+        Args:
+            file_name: input file to read from disk
+            time_from: the time when static device name record starts
+            time_to: the time when static device record ends
+        Returns:
+            static_device: the static device list
+    """
     with open(file_name) as f:
         while (True):
             line = f.readline().split(" ");
@@ -31,6 +39,15 @@ def get_static_device(file_name, time_from, time_to):
     return static_device
 
 def read_device(file_name, static_device):
+    """
+        this module is to read the device list from disk and remove noise.
+        Args:
+            file_name: input file to read from disk
+            static_device: the static device list
+        Returns:
+            device_list: a list of set which store data from each node after
+                        removing noise
+    """
     device_list = [];
     block = -1;
     with open(file_name) as f:
@@ -49,9 +66,24 @@ def read_device(file_name, static_device):
 
 
 def time_switch(desired_time):
+    """
+        this module is to switch time from BST to ET
+        Args:
+            desired_time: time at ET
+        Returns:
+            the return vlue: the list position
+    """
     return (desired_time + 4) * 6 * 60
 
 def connectivity_at_certain_time(time, device_list):
+    """
+        this module is to build graph based on the device list
+        Args:
+            time: desired time to process
+            device_list : device list read befor
+        Returns:
+            dict : dictionary contains the graph built
+    """
     device_count = len(device_list)
     dict = {}
     length = length = len(device_list);
@@ -70,6 +102,13 @@ def connectivity_at_certain_time(time, device_list):
     return dict
 
 def dictToGraph(dict):
+    """
+        this module is to build graph based on the dictionary
+        Args:
+            dict : dictionary contains the graph built
+        Returns:
+            G : graph we built with label (weight)
+        """
     G = nx.MultiDiGraph()
 
     for key in dict.keys():
@@ -78,21 +117,22 @@ def dictToGraph(dict):
     return G
 
 def main():
+    # set static device record time from
     time_from = '02';
+    # set static device record time to
     time_to = '06';
+    
     static_device = []
     device_list = []
-    # 0 : node 11
-    # 1 : node 6
-    # 2 : node 7
-    # 3 : node 9
     for i in range(1, 10):
         file_name = sys.argv[i]
         static_device.append(get_static_device(file_name, time_from, time_to));
         device_list.append(read_device(file_name, static_device[i - 1]));
     dict = connectivity_at_certain_time(time_switch(18), device_list);
     G = dictToGraph(dict)
+    #write out to .dot file
     write_dot(G, 'graph.dot')
+
 if __name__ == '__main__':
     main()
 
