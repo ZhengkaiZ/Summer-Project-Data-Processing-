@@ -64,7 +64,6 @@ def read_device(file_name, static_device):
 
     return device_list
 
-
 def time_switch(desired_time):
     """
         this module is to switch time from BST to ET
@@ -86,7 +85,7 @@ def connectivity_at_certain_time(time, device_list):
     """
     device_count = len(device_list)
     dict = {}
-    length = length = len(device_list);
+    length = len(device_list);
     for i in range(0, length):
         temp_set = device_list[i]
         for entry in temp_set[time]:
@@ -121,7 +120,7 @@ def main():
     time_from = '02';
     # set static device record time to
     time_to = '06';
-    
+
     static_device = []
     device_list = []
     for i in range(1, 10):
