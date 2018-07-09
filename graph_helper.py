@@ -1,6 +1,5 @@
 """ Data Analysis based on Graph
     This code will generate grapg.out file to print out our desired graph
-    author: Zhengkai Zhang
 """
 import sys
 import networkx as nx
@@ -69,7 +68,7 @@ def connectivity_at_certain_time(time, device_list, node):
                             dict[str(node[i]) + " " + str(node[j])] += 1
     return dict
 
-def dictToGraph(dict):
+def dict_to_graph(dict):
     """
         this module is to build graph based on the dictionary
         Args:

@@ -1,4 +1,11 @@
 def device_to_dict(node):
+    """
+        Read from data files to generate device dictionary for one node
+        Args:
+            node: input node number list
+        Return:
+            Device list
+    """
     device_dict = []
     num = 0;
     for n in node:

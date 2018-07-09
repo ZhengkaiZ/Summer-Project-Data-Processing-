@@ -2,14 +2,6 @@ import sys
 from sets import Set
 
 def read_device(file_name):
-    """
-        this module is to read the device list from disk and remove noise.
-        Args:
-        file_name: input file to read from disk
-        Returns:
-        device_list: a list of set which store data from each node after
-        removing noise
-        """
     device_list = [];
     num = 180
     index = -1
@@ -79,7 +71,6 @@ def main():
     result = filter_noise(noise_list)
     for i in range(1, 6):
         write_clean_file(sys.argv[i], result)
-
 
 if __name__ == '__main__':
     main()
