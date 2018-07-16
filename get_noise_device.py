@@ -35,7 +35,7 @@ def filter_noise(noise_list):
         result.append(Set())
         for key in noise_list[0][i].keys():
             num = 0
-            for j in range(1, 5):
+            for j in range(1, 6):
                 if key in noise_list[j][i]:
                     num += 1
             if num >= 3:
